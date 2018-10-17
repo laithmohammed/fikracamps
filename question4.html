@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question 4</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<td><span>Please type first array :</span></td>
+			<td><input type="text" id="array_input1" placeholder="Ex:[7,8,3,5] or [d,r,w]"></td>
+		</tr>
+		<tr>
+			<td><span>Please type second array :</span></td>
+			<td><input type="text" id="array_input2" placeholder="Ex:[a,b,c,d] or [4,5,6]"></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" id="submit_input" onclick='proceed()'></td>
+		</tr>
+	</table>
+	<hr>
+	<div id="demo"></div>
+<script type="text/javascript">
+function proceed() {
+	//get input value from input tag that have id = 'array_input1' by user.
+	var array_input1 = document.getElementById('array_input1').value;
+	//get input value from input tag that have id = 'array_input2' by user.
+	var array_input2 = document.getElementById('array_input2').value;
+	//insert the result of numberOfArray function into div tag that have id = 'demo'.
+	document.getElementById('demo').innerHTML = combineArray(array_input1,array_input2);
+}
+function combineArray(array1, array2){
+	//make error variable to hold the errors.
+	var error		= "";
+	//check array1 is not empty.
+	if(array1.length == 0){ error = error + "<span>type <b>first</b> array at input field !!</span><br>"; }
+	//check array2 is not empty.
+	if(array2.length == 0){ error = error + "<span>type <b>second</b> array at input field !!</span><br>"; }
+	//check array1 string have array format.
+	if(isArray(array1) != true){ error = error + isArray(array1,'first'); }
+	//check array2 string have array format.
+	if(isArray(array2) != true){ error = error + isArray(array2,'second'); }
+	//starting combine action ...
+	if(error.length == 0){
+		//make new array for combine array.
+		var combineArray = new Array();
+		//convert string to array
+		var _Array1_ = string2array(array1);
+		var _Array2_ = string2array(array2);
+		//determine which array have larger length.
+		var maxloop  = Math.max(_Array1_.length, _Array2_.length);
+		//start combine with 'for' loop
+		for (var i = 0; i < maxloop; i++) {
+		 	if(_Array1_[i] != null && _Array1_[i] != undefined){ combineArray.push(_Array1_[i]);}
+		 	if(_Array2_[i] != null && _Array2_[i] != undefined){ combineArray.push(_Array2_[i]);}
+		} 
+	}
+	if(error.length != 0){ return error; }
+	if(error.length == 0){
+		//return combineArray as html;
+		var html = "[ ";
+		var commas;
+		for (var i = 0; i < combineArray.length; i++) {
+			if(i == 0){ commas = ""; }else{  commas = " , "; }
+			html = html + commas +combineArray[i];
+		}
+		html = html + " ]";
+		return html;
+	}
+}
+function isArray(array,loc=""){
+	var permit = true;
+	//make error variable to hold the errors.
+	var error		= "";
+	//check if there are square brackets.
+	if(array[0] != "["){ 
+		permit = false;
+		error = error + "<span>set square bracket '[' at the start of <b>"+loc+"</b> array or remove spaces or symbols at start</span><br>";
+	}
+	if(array[array.length-1] != "]"){
+		permit = false;
+		error = error + "<span>set square bracket ']' at the end of <b>"+loc+"</b> array or remove spaces or symbols at end</span><br>";
+	}
+	//return final result.
+	if(permit == true ){ return true; }
+	if(permit == false){ return error; }
+}
+function string2array(string){
+	// get text within brackets.
+	var sub_string = string.substr(1,string.length-2);
+	// separating data.
+	var subdata = sub_string.split(",");
+	return subdata;
+}
+</script>
+</body>
+</html>

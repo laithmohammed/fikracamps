@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question 2</title>
+</head>
+<body>
+	<span>Please type your array of numbers :</span>
+	<input type="text" id="array_input" placeholder="Ex: [2,7,4,5] or [7,8,3,5]">
+	<input type="submit" id="submit_input" onclick='proceed()'>
+	<hr>
+	<div id="demo"></div>
+<script type="text/javascript">
+function proceed() {
+	//get input value from input tag that have id = 'array_input' by user.
+	var array_input = document.getElementById('array_input').value;
+	//insert the result of numberOfArray function into div tag that have id = 'demo'.
+	document.getElementById('demo').innerHTML = numberOfArray(array_input);
+}
+function modifyArray(array){
+	var result = new Array();
+	for (var i = 0; i < array.length; i++) {
+		switch (array[i]){
+			case "1":	result.push('one');		break;
+			case "2":	result.push('two');		break;
+			case "3":	result.push('three');	break;
+			case "4":	result.push('four');	break;
+			case "5":	result.push('five');	break;
+			case "6":	result.push('six');		break;
+			case "7":	result.push('seven');	break;
+			case "8":	result.push('eight');	break;
+			case "9":	result.push('nine');	break;
+		}
+	}
+	return result;
+}
+function numberOfArray(input){
+	//make error variable to hold the errors.
+	var error		= "";
+	//make variable for the new input variable after remove any space.
+	var new_input	= "";
+	//remove any space from input variable.
+	for (var x = 0; x < input.length; x++) {
+		if(input[x] != ' '){ new_input = new_input + input[x]; }
+	}
+	//check it is contain only number and it is array format;
+	var permit = true;
+		//check if there are square brackets.
+		if(new_input[0] != "["){ 
+			permit = false;
+			error = error + "<span>set square bracket '[' at the first of your array</span><br>";
+		}
+		if(new_input[new_input.length-1] != "]"){
+			permit = false;
+			error = error + "<span>set square bracket ']' at the end of your array</span><br>";
+		}
+		if(permit == true){
+			// get text within brackets.
+			var inputdata = new_input.substr(1,new_input.length-2);
+			// separating data.
+			var subdata = inputdata.split(",");
+			//check data is number type
+			var sub_error;
+			for (var i = 0; i < subdata.length; i++) {
+				switch (subdata[i]){
+					case "1": break;
+					case "2": break;
+					case "3": break;
+					case "4": break;
+					case "5": break;
+					case "6": break;
+					case "7": break;
+					case "8": break;
+					case "9": break;
+					//if no any case is match then:
+					default : 
+						sub_error = "<span>this value <b style='color:red;'>"+subdata[i]+"</b> have index = <b style='color:red;'>"+i+"</b> within your array is not number range between 0 - 9</span><br>";
+						if (subdata[i].length == 0){ sub_error = "<span>index = "+i+" within your array is empty, try to remove it</span><br>"; }
+						error = error + sub_error;
+						permit = false;
+				}
+			}
+		}
+	if(permit == false) { return error; }
+	if(permit == true ) { 
+		//if you need only array:
+		//return modifyInputArray(subdata);
+		//if you need to see it within window interface: 
+		var _array_ = modifyArray(subdata);
+		var html = "[";
+		var commas;
+		for (var i = 0; i < _array_.length; i++) {
+			if(i == 0){ commas = ""; }else{  commas = ","; }
+			html = html + commas +'"'+_array_[i]+'"';
+		}
+		html = html + "]";
+		return html;
+	}
+}
+</script>
+</body>
+</html>
